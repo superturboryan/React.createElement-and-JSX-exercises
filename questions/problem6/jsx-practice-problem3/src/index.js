@@ -1,3 +1,8 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import * as serviceWorker from './serviceWorker';
+
+
 let sellers = [
    {
       name: "bob",
@@ -58,50 +63,47 @@ let sellers = [
 //Has two properties city and country
 let elemOfShippingLocation = function (location) {
 
-   return React.createElement(
-      "div",
-      {},
-      "Ships from " + location.city + ", " + location.country
-   )
+   return <div>Ships from {location.city}, {location.country}</div>
 }
 
 //Has price, description, itemID, and ships from
 let elemOfItem = function (item) {
 
-   return React.createElement(
-      "div",
-      {},
-      React.createElement("h3", {}, item.description),
-      "price: $" + item.price,
-      React.createElement("div", {}, "itemID: " + item.itemid),
-      elemOfShippingLocation(item.shipsFrom)
-   )
+   return <div>
+      <h3>{item.description}</h3>
+      price: ${item.price}
+      <div>itemID: {item.itemid}</div>
+      <div> {elemOfShippingLocation(item.shipsFrom)} </div>
+   </div>
 }
 
 //Has city and country
 let elemOfSellerLocation = function (location) {
 
-   return React.createElement(
-      "div",
-      {},
-      "Seller location: " + location.city + ", " + location.country
-   )
+   return <div>Seller location: {location.city}, {location.country}</div>
 }
 
 //Has name, location, and items
 let elemOfSeller = function (seller) {
 
-   return React.createElement(
-      "div",
-      {},
-      React.createElement("h1", {}, seller.name),
-      elemOfSellerLocation(seller.location),
-      seller.items.map(elemOfItem)
-   )
+   return <div><h1> {seller.name} </h1> {elemOfSellerLocation(seller.location)} {seller.items.map(elemOfItem)}</div>
+
+   // return React.createElement(
+   //    "div",
+   //    {},
+   //    React.createElement("h1", {}, seller.name),
+   //    elemOfSellerLocation(seller.location),
+   //    seller.items.map(elemOfItem)
+   // )
 }
 
 let sellerElements = sellers.map(elemOfSeller)
 
 let rootdiv = document.getElementById('root')
 
-ReactDOM.render(sellerElements, root)
+ReactDOM.render(sellerElements, rootdiv)
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();
